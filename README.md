@@ -1,6 +1,9 @@
 # HP_Z420_Z620_Z820_BOOTBLOCK_2013_BIOS_mod
 A guide and collection of resources on how to flash 2013 BootBlock and modded BIOS to HP Z420, Z620, and Z820. The flashing procedure is done with software only, and no BIOS chip clips or desoldering. The modded BIOS supports NVME boot, ReSizable Bar, a range of CPU microcodes.
 
+
+**I am not responsible if you do brick your computer - you are doing this at your own risk**
+
 **Credits:**
 
 @BillDH2k of GitHub as a co-developer and tester of the modded BIOS
@@ -16,10 +19,15 @@ This guide is for Z420/Z620/Z820 to do various manipulations of the BIOS with so
 The guide is economical on explanations, if you want more background, please refer to the excellent hardware modding guide:
 https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 
+**Everything has been fully tested for Z620. The method is expected to also work for Z820, but will need the 1st tester. Z820 files are provided for completeness, following the same approach as for Z620**
 
-Tools of the trade:
+**Tools of the trade:**
 - WinMerge (all kinds of easy right click binary compare functionality)
 - HxD2500 (binary block copy/paste)
+- UEFITool (to QC modded BIOS)
+- Intel Flash Programming Tool (FPT) : https://winraid.level1techs.com/t/intel-converged-security-management-engine-drivers-firmware-and-tools-2-15/30719
+- HP MEBLAST Tool
+
 
 **Read this guide fully before starting. Ask questions before, not after if something is not clear.**
 
@@ -27,13 +35,13 @@ Download both general files, and the specific files for your type of workstation
 
 Z620 is fully tested. Z820 has not been tested yet, but the BIOS files are so similar that the mods ported to Z820 BIOS files should work in the identical manner. MEBLAST utility binary that HP provided was the same for Z620/Z820. ME region is also identical in Z620 and Z820 BIOS files. "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" full write access is likely a function of 2.07 BIOS that disabled protected range registers for the BIOS region in this mode (BIOS: 0x510000 to 0xFFFFFF).
 
-Doing most of the operations here other than the modded BIOS flash should be reasonably safe. Triple check your [ipt -f ...] writing commands, they have no built-in verifications of any sort. 
+Doing most of the operations here other than the modded BIOS flash should be reasonably safe. Triple check your [fpt -f ...] writing commands, they have no built-in verifications of any sort. 
 
 In the guide below for specific file names, X means either "6" for Z420, Z620, and "8" for Z820. Y means either "1" for Z420, Z620 (as in J61), and "3" for Z820 (as in J63). Z420 and Z620 are identical in the BIOS domain. Ensure you are using the correct versions for your workstation!!!
 
-All BIOS versions have NVME and ReBar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these cpus. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. Obviously, in 3.96 MC version these are identical as in the 0396 BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. Microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96.
+All BIOS versions have NVME and ReBar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these cpus. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. Obviously, in 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
 
-These are modded BIOS versions:
+These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions.
 - J6Y_0396_NRE.bin			NVME boot, ReBar support, 3.96 MC
 - J6Y_0396_NRE_mc91.bin		NVME boot, ReBar support, 3.91 MC
 - J6Y_0396_NRE_mc91p.bin	NVME boot, ReBar support, 3.91+ MC
@@ -64,7 +72,7 @@ AFUDOS might be a workable route but needs to be tested, and a few different AFU
 
 **General instructions.**
 
-You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8 package to the USB drive as well. Place the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familirize yourself with DOS commands, such as cd, ren, dir, etc.
+You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack imet8.zip file to the USB drive into IMET8 folder. This imet8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familirize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
 
  Boot the USB stick in compatibility mode. If the computer does not see the stick, do BIOS reset by unplugging the machine, and holding the BIOS reset button for 10 seconds. Then it should see it.
  
@@ -78,18 +86,18 @@ A bunch of files will get created, slicing and dicing the BIOS chip contents. Yo
 
 - dir *00.bin
 
-- 05/17/2024  09:32 AM            65,536 BBLK00.BIN
-- 05/17/2024  09:32 AM        10,944,512 BIOB00.BIN
-- 05/17/2024  09:32 AM        11,468,800 BIOS00.BIN
-- 05/17/2024  09:32 AM           458,752 BIOV00.BIN
-- 05/17/2024  09:32 AM             4,096 FDOO00.BIN
-- 05/17/2024  09:32 AM        16,777,216 FIRM00.BIN
-- 05/17/2024  09:32 AM             8,192 GBEO00.BIN
-- 05/17/2024  09:32 AM         5,287,936 MEOO00.BIN
-- 05/17/2024  09:32 AM             8,192 PDRO00.BIN
+-             65,536 BBLK00.BIN
+-         10,944,512 BIOB00.BIN
+-         11,468,800 BIOS00.BIN
+-            458,752 BIOV00.BIN
+-              4,096 FDOO00.BIN
+-         16,777,216 FIRM00.BIN
+-              8,192 GBEO00.BIN
+-          5,287,936 MEOO00.BIN
+-              8,192 PDRO00.BIN
 
  
- You can use any index, as in [backup 21], etc. This will be dumping your flash chip contents into IMET8 folder as above, all indexed with 21.
+ You can use any label or index, as in [backup 05], etc. This will be dumping your flash chip contents into IMET8 folder as above, all indexed with [05], etc.
 
 **1. Updating ME to the latest ME8 version**
 
@@ -111,7 +119,7 @@ MEBLAST J6Y_0396.bin
 
 **2. Obtaining full write access to the BIOS flash chip enabling both bootblock update in software, and custom BIOS loading.**
 
-Here, we use the MEBLAST glitch with J207 BIOS to trigger "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" operation, where we will have full write access to the flash chip. Updating ME to ME8 first is strongly recommended before doing Section 2, mostly so you do not have to worry about this later. You will also gain confidence with the approach.
+Here, we use the MEBLAST glitch with J207 BIOS to trigger "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" operation, where we will have full write access to the flash chip. Updating ME to ME8 first is strongly recommended before doing Section 2, mostly so you do not have to worry about this later. You will also gain confidence with the MEBLAST approach.
 
 Unpack bootblock extraction (B13VX20.bin) into your DOS USB IMET8 folder.
 Unpack J207 and J396 BIOS DOS update directories to the root of the USB drive, make sure you know which folder is which so you can navigate to them in DOS. Also unpack your desired BIOS mod file to IMET8 folder as well.
@@ -120,21 +128,22 @@ Steps:
 
 - A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). Move the ME FDO jumper from its current 2 pins to the other enabled write position.
 - B. Boot to DOS using the USB stick.
-- C. Back up your current BIOS chip as instructed above, you must do this ([backup 11] command). A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS section separately.
+- C. Back up your current BIOS chip as instructed above, you must do this by running [backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS section separately.
 - D. Run MEBLAST to create the unitialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 1
 - E. Immediately, go to J207 directory and do J207 BIOS update using the DOS tools, ensure it flashed successfully
 - F. Soft reboot, meaning hit "Ctrl-Alt-Del"
 - G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE"
 - H. Run commands from Section 2.1 or 2.2, depending on what you are trying to do. Can do both 2.1 & 2.2 back to back.
 - I. In order to exit this "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE", 2 BIOS sections should be restored from the backup "11" above. Specifically, we restore GBE and ME
+
 cd IMET8
 
 fpt.exe -ME -f MEOO11.bin
 
 fpt.exe -GBE -f GBEO11.bin
 
-- J. If you did not update to custom BIOS in Section 2.2, run official update back to version 3.96 since you probably don't want to keep 2.07.
-- K. Turn the computer off. Clear BIOS variables with the BIOS reset button. Turn the computer on. Reboot. Things should be back to normal.
+- J. If you did not update to custom BIOS in Section 2.2, run the official update back to version 3.96 since you probably don't want to keep 2.07.
+- K. Turn the computer off. Unplug. Put the jumpers back where they were. Clear BIOS variables with the BIOS reset button. Turn the computer on. Reboot. Things should be back to normal.
 
 **2.1 Bootblock update to 2013.**
 
