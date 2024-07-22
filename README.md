@@ -32,6 +32,8 @@ https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 
 **Read this guide fully before starting. Ask questions before, not after if something is not clear.**
 
+Backup your BIOS chip contents before doing anything. The chip has some unique information that you will not find elsewhere. With a BIOS chip backup you will have a chance to restore things back to a working state. Copy your flash chip backup to another storage for safekeeping before doing any serious flash chip updating, USB sticks can be unreliable. If you don't plan to backup, don't proceed!!!
+
 Download both IMET8.zip, and the specific files for your type of workstation.
 
 Z620 is fully tested. Z820 has not been tested yet, but the BIOS files are so similar that the mods ported to Z820 BIOS files should work in the identical manner. MEBLAST utility binary that HP provided was the same for Z620/Z820. ME region is also identical in Z620 and Z820 BIOS files. "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" full write access is likely a function of 2.07 BIOS that disabled protected range registers for the BIOS region in this mode (BIOS: 0x510000 to 0xFFFFFF).
@@ -40,7 +42,7 @@ Doing most of the operations here other than the modded BIOS flash should be rea
 
 In the guide below for specific file names, X means either "6" for Z420, Z620, and "8" for Z820. Y means either "1" for Z420, Z620 (as in J61), and "3" for Z820 (as in J63). Z420 and Z620 are identical in the BIOS domain. Ensure you are using the correct versions for your workstation!!!
 
-All BIOS versions have NVME and ReBar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these CPUs. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
+All BIOS versions have NVME and Resizable Bar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these CPUs. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
 
 These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions.
 - J6Y_0396_NRE.bin			NVME boot, ReBar support, 3.96 MC
@@ -50,9 +52,8 @@ These are modded BIOS versions, fully tested for Z620 already (J61), still need 
 
 The cropped BIOS code regions were also provided, those file names start with "c". You can use these shorter files directly with the command [fpt.exe  -f CJ6Y.bin -A 0x580000 -L 0xA70000]. Obviously, unzip the archives before writing them.
 
-Backup your BIOS chip contents before doing anything. The chip has some unique information that you will not find elsewhere. With a BIOS chip backup you will have a chance to restore things back to a working state. Copy your flash chip backup to another storage for safekeeping before doing any serious flash chip updating, USB sticks can be unreliable. If you don't plan to backup, don't proceed!!!
-
-
+The Resizable Bar report can be found here:
+https://github.com/xCuri0/ReBarUEFI/issues/11#issuecomment-2187864198
 
 
 # What is covered:
