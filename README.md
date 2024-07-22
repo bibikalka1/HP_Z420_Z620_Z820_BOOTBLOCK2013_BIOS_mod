@@ -32,7 +32,7 @@ https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 
 **Read this guide fully before starting. Ask questions before, not after if something is not clear.**
 
-Download both imet8.zip, and the specific files for your type of workstation.
+Download both IMET8.zip, and the specific files for your type of workstation.
 
 Z620 is fully tested. Z820 has not been tested yet, but the BIOS files are so similar that the mods ported to Z820 BIOS files should work in the identical manner. MEBLAST utility binary that HP provided was the same for Z620/Z820. ME region is also identical in Z620 and Z820 BIOS files. "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" full write access is likely a function of 2.07 BIOS that disabled protected range registers for the BIOS region in this mode (BIOS: 0x510000 to 0xFFFFFF).
 
@@ -54,20 +54,22 @@ Backup your BIOS chip contents before doing anything. The chip has some unique i
 
 # What is covered:
 
-**0. General instructions.**
+**0. Present limitations.**
 
-**1. Updating Management Engine (ME) to the latest ME8 version**
+**1. General instructions.**
 
-**2. Obtaining full write access to the BIOS flash chip**
+**2. Updating Management Engine (ME) to the latest ME8 version**
 
-**2.1 Updating Bootblock2011 to Bootblock2013 (V2 Xeon support)**
+**3. Obtaining full write access to the BIOS flash chip**
 
-**2.2 Updating stock BIOS to a modded version with built-in NVME boot and Resizable Bar support, plus possible microcode changes**
+**3.1 Updating Bootblock2011 to Bootblock2013 (V2 Xeon support)**
 
-**3. What to do if the computer does not boot up.**
+**3.2 Updating stock BIOS to a modded version with built-in NVME boot and Resizable Bar support, plus possible microcode changes**
+
+**4. What to do if the computer does not boot up.**
 
 
-**Present limitations.**
+**0. Present limitations.**
 
 Currently the workflow is only possible if a V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet and lacks the V2 microcode. If you already have a V2, and want to load a modded BIOS, you can either do that with a flash chip clip (tedious and prone to failure), or by temporarily swapping in a cheap V1 Xeon so that you can load the modded BIOS (suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). After loading up the modded BIOS you can swap back to V2 Xeon. Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long bristle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
 
@@ -76,13 +78,13 @@ https://winraid.level1techs.com/t/lenovo-d30-thinkstation-c602-chipset-me7-sandy
 AFUDOS might be a workable route but needs to be tested, and a few different AFUDOS versions would need to be chased down.
 
 
-**0. General instructions.**
+**1. General instructions.**
 
-You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack imet8.zip file to the USB drive into IMET8 folder. This imet8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
+You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8.zip file to the USB drive into IMET8 folder. This IMET8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
 
  Boot the USB stick in compatibility mode. If the computer does not see the stick, do BIOS reset by unplugging the machine, and holding the BIOS reset button for 10 seconds. Then it should see it.
  
- Backup your current BIOS chip early, and often. A convenient batch script "backup" is provided in imet8.zip file. Here is how to use it:
+ Backup your current BIOS chip early, and often. A convenient batch script "backup" is provided in IMET8.zip file. Here is how to use it:
 
 cd IMET8
 
@@ -105,7 +107,7 @@ A bunch of files will get created, slicing and dicing the BIOS chip contents. Yo
  
  You can use any label or index, as in [backup 05], etc. This will be dumping your flash chip contents into IMET8 folder as above, all indexed with [05], etc.
 
-**1. Updating ME to the latest ME8 version**
+**2. Updating ME to the latest ME8 version**
 
 Here, we use the official HP MEBLAST utility. It will copy the ME region from the supplied full BIOS file to the chip, and set the flag for ME8 to initialize itself. We will use the latest V3.96 HP BIOS file instead of the version made available in the original MEBLAST HP package.
 
@@ -123,7 +125,7 @@ MEBLAST J6Y_0396.bin
 - E. Shut down, return the FDO jumper to its original position, turn the computer on.
 - F. Done, you now have ME8, fully initialized. You should be able to clone this ME section from the BIOS chip whenever is needed.
 
-**2. Obtaining full write access to the BIOS flash chip enabling both bootblock update in software, and custom BIOS loading.**
+**3. Obtaining full write access to the BIOS flash chip enabling both bootblock update in software, and custom BIOS loading.**
 
 Here, we use the MEBLAST glitch with 2.07 BIOS to trigger "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" operation, where we will have full write access to the flash chip. Updating ME to ME8 first is strongly recommended before doing Section 2, mostly so you do not have to worry about this later. You will also gain confidence with the MEBLAST approach.
 
@@ -139,7 +141,7 @@ Steps:
 - E. Immediately, go to J207 directory and do 2.07 BIOS update using the DOS tools, ensure it flashed successfully
 - F. Soft reboot, meaning hit "Ctrl-Alt-Del"
 - G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE"
-- H. Run commands from Section 2.1 or 2.2, depending on what you are trying to do. Can do both 2.1 & 2.2 back to back.
+- H. Run commands from Section 3.1 or 3.2, depending on what you are trying to do. Can do both 3.1 & 3.2 back to back.
 - I. In order to exit this "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE", 2 BIOS sections should be restored from the backup "11" above. Specifically, we restore GBE and ME
 
 cd IMET8
@@ -151,24 +153,24 @@ fpt.exe -GBE -f GBEO11.bin
 - J. If you did not update to custom BIOS in Section 2.2, run the official update back to version 3.96 since you probably don't want to keep 2.07.
 - K. Turn the computer off. Unplug. Put the jumpers back where they were. Clear BIOS variables with the BIOS reset button. Turn the computer on. Things should be back to normal.
 
-**2.1 Bootblock update to 2013.**
+**3.1 Bootblock update to 2013.**
 
 Try to ensure that AC power won't go out while you do this. You will need about 30 seconds.
 
-- In step H of Section 2, run this command, remember X is either 6 for Z620, or 8 for Z820 since you unpacked the correct file:
+- In step H of Section 3, run this command, remember X is either 6 for Z620, or 8 for Z820 since you unpacked the correct file:
 
 fpt.exe  -f B13VX20.bin -A 0xFF0000 -L 0x010000
 
-**2.2 Loading custom 3.96 BIOS.**
+**3.2 Loading custom 3.96 BIOS.**
 
 Try to ensure that AC power won't go out while you do this.
 
 - Let us assume you want to use this mod: cJ6Y_0396_NRE_mc96p.bin, where Y is either 1 for Z620 or 3 for Z820. Files with prefix "c" are properly cropped to go into BIOS area starting at 0x580000, and stopping right before the boot block area. For power interruption avoidance reasons, the 64K bootblock should have been written beforehand, and will not get updated here. Copy this cropped version to IMET8 and rename it to something short, such as CJ6Y.bin
-In step H of Section 2, run this:
+In step H of Section 3, run this:
 
 fpt.exe  -f CJ6Y.bin -A 0x580000 -L 0xA70000
 
-**3. What to do if the computer does not boot up.**
+**4. What to do if the computer does not boot up.**
 
 You must have backed up your BIOS contents before proceeding with any modifications. It is also helpful if you took pictures of your screen with a cell phone at critical steps so that it's possible to identify what might have gone wrong.
 
