@@ -79,7 +79,7 @@ AFUDOS might be a workable route but needs to be tested, and a few different AFU
 
 **1. General instructions.**
 
-You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8.zip file to the USB drive into IMET8 folder. This IMET8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
+You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8.zip file to the USB drive into IMET8 folder. This IMET8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS area and the boot block area into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
 
  Boot the USB stick in compatibility mode. If the computer does not see the stick, do BIOS reset by unplugging the machine, and holding the BIOS reset button for 10 seconds. Then it should see it.
  
@@ -122,11 +122,11 @@ cd MEBX20
 MEBLAST J6Y_0396.bin
 
 - E. Shut down, return the FDO jumper to its original position, turn the computer on.
-- F. Done, you now have ME8, fully initialized. You should be able to clone this ME section from the BIOS chip whenever is needed.
+- F. Done, you now have ME8, fully initialized. You should be able to clone this ME area from the BIOS chip whenever is needed.
 
 **3. Obtaining full write access to the BIOS flash chip enabling both bootblock update in software, and custom BIOS loading.**
 
-Here, we use the MEBLAST glitch with 2.07 BIOS to trigger "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" operation, where we will have full write access to the flash chip. Updating ME to ME8 first is strongly recommended before doing Section 2, mostly so you do not have to worry about this later. You will also gain confidence with the MEBLAST approach.
+Here, we use the MEBLAST glitch with 2.07 BIOS to trigger "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" operation, where we will have full write access to the flash chip. Updating ME to ME8 first is strongly recommended before doing Section 3, mostly so you do not have to worry about this later. You will also gain confidence with the MEBLAST approach.
 
 Unpack bootblock extraction (B13VX20.bin) into your DOS USB IMET8 folder.
 Unpack J207 and J396 BIOS DOS update directories to the root of the USB drive, make sure you know which folder is which so you can navigate to them in DOS with [cd] command. Also unpack your desired BIOS mod file to IMET8 folder as well.
@@ -135,13 +135,13 @@ Steps:
 
 - A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). Move the ME FDO jumper from its current 2 pins to the other enabled write position.
 - B. Boot to DOS using the USB stick.
-- C. Back up your current BIOS chip as instructed above, you must do this by running [cd IMET8; backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS section separately.
-- D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 1
+- C. Back up your current BIOS chip as instructed above, you must do this by running [cd IMET8; backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS area separately.
+- D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 2
 - E. Immediately, go to J207 directory and do 2.07 BIOS update using the DOS tools, ensure it flashed successfully
 - F. Soft reboot, meaning hit "Ctrl-Alt-Del"
 - G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE"
 - H. Run commands from Section 3.1 or 3.2, depending on what you are trying to do. Can do both 3.1 & 3.2 back to back.
-- I. In order to exit this "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE", 2 BIOS sections should be restored from the backup "11" above. Specifically, we restore GBE and ME
+- I. In order to exit this "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE", 2 BIOS areas should be restored from the backup "11" above. Specifically, we restore GBE and ME
 
 cd IMET8
 
@@ -149,7 +149,7 @@ fpt.exe -ME -f MEOO11.bin
 
 fpt.exe -GBE -f GBEO11.bin
 
-- J. If you did not update to custom BIOS in Section 2.2, run the official update back to version 3.96 since you probably don't want to keep 2.07.
+- J. If you did not update to custom BIOS in Section 3.2, run the official update back to version 3.96 since you probably don't want to keep 2.07.
 - K. Turn the computer off. Unplug. Put the jumpers back where they were. Clear BIOS variables with the BIOS reset button. Turn the computer on. Things should be back to normal.
 
 **3.1 Bootblock update to 2013.**
