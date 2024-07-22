@@ -40,7 +40,7 @@ Doing most of the operations here other than the modded BIOS flash should be rea
 
 In the guide below for specific file names, X means either "6" for Z420, Z620, and "8" for Z820. Y means either "1" for Z420, Z620 (as in J61), and "3" for Z820 (as in J63). Z420 and Z620 are identical in the BIOS domain. Ensure you are using the correct versions for your workstation!!!
 
-All BIOS versions have NVME and ReBar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these cpus. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
+All BIOS versions have NVME and ReBar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these CPUs. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
 
 These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions.
 - J6Y_0396_NRE.bin			NVME boot, ReBar support, 3.96 MC
@@ -50,7 +50,7 @@ These are modded BIOS versions, fully tested for Z620 already (J61), still need 
 
 The cropped BIOS code regions were also provided, those file names start with "c". You can use these shorter files directly with the command [fpt.exe  -f CJ6Y.bin -A 0x580000 -L 0xA70000]. Obviously, unzip the archives before writing them.
 
-Backup your BIOS chip contents before doing anything. The chip has some unique information that you will not find elsewhere. With a BIOS chip backup you will always have a chance to restore things back to where they were. Copy your flash chip backup to another storage for safekeeping before doing any serious flash chip updating, USB sticks can be unreliable. If you don't plan to backup, don't proceed!!!
+Backup your BIOS chip contents before doing anything. The chip has some unique information that you will not find elsewhere. With a BIOS chip backup you will have a chance to restore things back to a working state. Copy your flash chip backup to another storage for safekeeping before doing any serious flash chip updating, USB sticks can be unreliable. If you don't plan to backup, don't proceed!!!
 
 # What is covered:
 
@@ -66,7 +66,10 @@ Backup your BIOS chip contents before doing anything. The chip has some unique i
 
 **3. What to do if the computer does not boot up.**
 
-Currently the workflow is only possible if a V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet and lacks the V2 microcode. If you already have a V2, and want to load a modded BIOS, you can either do that with a flash chip clip (tedious and prone to failure), or by temporarily swapping in a cheap V1 Xeon so that you can load the modded BIOS (suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). After loading up the modded BIOS you can swap back to V2 Xeon. Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long brisle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
+
+**Present limitations.**
+
+Currently the workflow is only possible if a V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet and lacks the V2 microcode. If you already have a V2, and want to load a modded BIOS, you can either do that with a flash chip clip (tedious and prone to failure), or by temporarily swapping in a cheap V1 Xeon so that you can load the modded BIOS (suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). After loading up the modded BIOS you can swap back to V2 Xeon. Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long bristle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
 
 @BillDH2k has done some testing with BIOS versions that do support V2 Xeons (3.50+), and those unfortunately would not provide full write access to the BIOS region of the flash chip under tested conditions in Manufacturing Mode. FD/ME regions are easily unlocked via the FDO jumper for writing with the [fpt], and neither represent any challenge nor confer any advantage. Updating the FD to have full write access does not help with writing the BIOS area, since there are additional locks (protected range registers) built into the BIOS code itself. In another report @nikey22 could use AFUDOS to update BIOS area on a similar vintage Lenovo.
 https://winraid.level1techs.com/t/lenovo-d30-thinkstation-c602-chipset-me7-sandy-bridge-to-me8-ivy-bridge-support/33917
@@ -75,11 +78,11 @@ AFUDOS might be a workable route but needs to be tested, and a few different AFU
 
 **0. General instructions.**
 
-You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack imet8.zip file to the USB drive into IMET8 folder. This imet8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familirize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
+You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack imet8.zip file to the USB drive into IMET8 folder. This imet8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS section and the boot block section into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
 
  Boot the USB stick in compatibility mode. If the computer does not see the stick, do BIOS reset by unplugging the machine, and holding the BIOS reset button for 10 seconds. Then it should see it.
  
- Backup your currect BIOS chip early, and often. A convenient batch script "backup" is provided in imet8.zip file. Here is how to use it:
+ Backup your current BIOS chip early, and often. A convenient batch script "backup" is provided in imet8.zip file. Here is how to use it:
 
 cd IMET8
 
@@ -132,7 +135,7 @@ Steps:
 - A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). Move the ME FDO jumper from its current 2 pins to the other enabled write position.
 - B. Boot to DOS using the USB stick.
 - C. Back up your current BIOS chip as instructed above, you must do this by running [cd IMET8; backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS section separately.
-- D. Run MEBLAST to create the unitialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 1
+- D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 1
 - E. Immediately, go to J207 directory and do 2.07 BIOS update using the DOS tools, ensure it flashed successfully
 - F. Soft reboot, meaning hit "Ctrl-Alt-Del"
 - G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE"
