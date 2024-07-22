@@ -52,6 +52,9 @@ The cropped BIOS code regions were also provided, those file names start with "c
 
 Backup your BIOS chip contents before doing anything. The chip has some unique information that you will not find elsewhere. With a BIOS chip backup you will have a chance to restore things back to a working state. Copy your flash chip backup to another storage for safekeeping before doing any serious flash chip updating, USB sticks can be unreliable. If you don't plan to backup, don't proceed!!!
 
+
+
+
 # What is covered:
 
 **0. Present limitations.**
@@ -67,6 +70,9 @@ Backup your BIOS chip contents before doing anything. The chip has some unique i
 **3.2 Updating stock BIOS to a modded version with built-in NVME boot and Resizable Bar support, plus possible microcode changes**
 
 **4. What to do if the computer does not boot up.**
+
+
+
 
 
 **0. Present limitations.**
