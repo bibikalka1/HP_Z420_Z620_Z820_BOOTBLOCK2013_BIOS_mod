@@ -34,11 +34,13 @@ https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 
 Backup your BIOS chip contents before doing anything. The chip has some unique information that you will not find elsewhere. With a BIOS chip backup you will have a chance to restore things back to a working state. Copy your flash chip backup to another storage for safekeeping before doing any serious flash chip updating, USB sticks can be unreliable. If you don't plan to backup, don't proceed!!!
 
+
+Doing most of the operations here other than the modded BIOS flash should be reasonably safe. Triple check your Intel Flash Tool writing commands [fpt -f ...], they have no built-in verifications of any sort. 
+
 Download both IMET8.zip, and the specific files for your type of workstation.
 
 Z620 is fully tested. Z820 has not been tested yet, but the BIOS files are so similar that the mods ported to Z820 BIOS files should work in the identical manner. MEBLAST utility binary that HP provided was the same for Z620/Z820. ME region is also identical in Z620 and Z820 BIOS files. "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" full write access is likely a function of 2.07 BIOS that disabled protected range registers for the BIOS region in this mode (BIOS: 0x510000 to 0xFFFFFF).
 
-Doing most of the operations here other than the modded BIOS flash should be reasonably safe. Triple check your [fpt -f ...] writing commands, they have no built-in verifications of any sort. 
 
 In the guide below for specific file names, X means either "6" for Z420, Z620, and "8" for Z820. Y means either "1" for Z420, Z620 (as in J61), and "3" for Z820 (as in J63). Z420 and Z620 are identical in the BIOS domain. Ensure you are using the correct versions for your workstation!!!
 
@@ -49,6 +51,9 @@ These are modded BIOS versions, fully tested for Z620 already (J61), still need 
 - J6Y_0396_NRE_mc91.bin		NVME boot, ReBar support, 3.91 MC
 - J6Y_0396_NRE_mc91p.bin	NVME boot, ReBar support, 3.91+ MC
 - J6Y_0396_NRE_mc96p.bin	NVME boot, ReBar support, 3.96+ MC
+
+For the work that was done to test all of these versions, see this link (only if you are curious):
+https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade/issues/13
 
 The cropped BIOS code regions were also provided, those file names start with "c". You can use these shorter files directly with the command [fpt.exe  -f CJ6Y.bin -A 0x580000 -L 0xA70000]. Obviously, unzip the archives before writing them.
 
