@@ -57,21 +57,13 @@ Backup your BIOS chip contents before doing anything. The chip has some unique i
 
 # What is covered:
 
-**0. Present limitations.**
-
-**1. General instructions.**
-
-**2. Updating Management Engine (ME) to the latest ME8 version**
-
-**3. Obtaining full write access to the BIOS flash chip**
-
-**3.1 Updating Bootblock2011 to Bootblock2013 (V2 Xeon support)**
-
-**3.2 Updating stock BIOS to a modded version with built-in NVME boot and Resizable Bar support, plus possible microcode changes**
-
-**4. What to do if the computer does not boot up.**
-
-
+- **0. Present limitations.**
+- **1. General instructions.**
+- **2. Updating Management Engine (ME) to the latest ME8 version**
+- **3. Obtaining full write access to the BIOS flash chip**
+	- **3.1 Updating Bootblock2011 to Bootblock2013 (V2 Xeon support)**
+	- **3.2 Updating stock BIOS to a modded version with built-in NVME boot and Resizable Bar support, plus possible microcode changes**
+- **4. What to do if the computer does not boot up.**
 
 
 
