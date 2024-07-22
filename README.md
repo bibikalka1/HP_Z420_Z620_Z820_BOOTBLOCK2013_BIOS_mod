@@ -183,7 +183,9 @@ You will need to try simpler fixes to more complex ones. Here is the sequence:
 
 
 
-# Official HP links to various useful files. These might disappear sooner or later once the workstations fall off HP support entirely.
+# Official HP links to various useful files.
+
+These might disappear sooner or later once the workstations fall off HP support entirely.
 
 
 Z620, ME7, ME8, BIOS 2.07
