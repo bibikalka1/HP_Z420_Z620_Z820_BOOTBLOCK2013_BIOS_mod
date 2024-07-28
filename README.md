@@ -162,7 +162,7 @@ fpt.exe -GBE -f GBEO11.bin
 - J. If you did not update to custom BIOS in Section 3.2, run the official update back to version 3.96 since you probably don't want to keep 2.07.
 - K. Turn the computer off. Unplug. Put the jumpers back where they were. Clear BIOS variables with the BIOS reset button. Turn the computer on. Things should be back to normal.
 
-Note for the curious ones: There is a different way to enter this manufacturing mode by copying ME region to the BIOS chip and leaving the init flag as FF - raise an **issue** if you want to explore this more. @BillDH2k has experienced this a lot when hardware flashing ME8.
+**Note for the curious ones:** There is a different way to enter this manufacturing mode by copying ME region to the BIOS chip and leaving the init flag as FF - raise an **issue** if you want to explore this more. @BillDH2k has experienced this a lot when hardware flashing ME8.
 
 **3.1 Bootblock update to 2013.**
 
