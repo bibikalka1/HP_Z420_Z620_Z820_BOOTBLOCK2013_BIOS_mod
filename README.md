@@ -75,7 +75,7 @@ https://github.com/xCuri0/ReBarUEFI/issues/11#issuecomment-2187864198
 
 **0. Present limitations.**
 
-Currently the workflow has only been fully tested if a V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet and lacks the V2 microcode. Actually, after doing some research I expect that a V2 Xeon with 2013 BootBlock and v2.07 will actually boot but report this "1801-Microcode Update Error. Missing or invalid Processor Microcode." Googling for this message seems to indicate that HP workstations do boot with this error - so you might be able to run v2.07 BIOS even on a v2 Xeon, allowing full flash chip write access. If you have v2 Xeon installed and a spare v1 Xeon, and would like to load a modded BIOS, do try this route first, and report back in **Issues**. If v2 Xeon does not boot at all with v2.07, you would fix that by swapping to v1 Xeon instead.
+Currently the workflow has only been fully tested if a V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet and lacks the V2 microcode. Actually, after doing some research I expect that a V2 Xeon with 2013 BootBlock and v2.07 should boot but will report this "1801-Microcode Update Error. Missing or invalid Processor Microcode." Googling for this message seems to indicate that HP workstations do boot with this error - so you might be able to run v2.07 BIOS even on a v2 Xeon, allowing full flash chip write access. If you have v2 Xeon installed and a spare v1 Xeon, and would like to load a modded BIOS, do try this route first, and report back in **Issues**. If v2 Xeon does not boot at all with v2.07, you would fix that by swapping to v1 Xeon instead.
 
 A more reliable but also somewhat more laborious route to load a modded BIOS is either do that with a flash chip clip (tedious and prone to failure), or by temporarily swapping in a cheap V1 Xeon so that you can load the modded BIOS (suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). After loading up the modded BIOS you can swap back to V2 Xeon. Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long bristle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
 
@@ -149,7 +149,7 @@ Steps:
 - D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 2
 - E. Immediately, go to J207 directory and do 2.07 BIOS update using the DOS tools, ensure it flashed successfully
 - F. Soft reboot, meaning hit "Ctrl-Alt-Del"
-- G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE"
+- G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE". Note: There is a different way to enter this manufacturing mode by copying ME region to the BIOS chip and leaving the init flag as FF - raise an **issue** if you want to explore this more. @BillDH2k has experienced this a lot when hardware flashing ME8.
 - H. Run commands from Section 3.1 or 3.2, depending on what you are trying to do. Can do both 3.1 & 3.2 back to back.
 - I. In order to exit this "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE", 2 BIOS areas should be restored from the backup "11" above. Specifically, we restore GBE and ME
 
