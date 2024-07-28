@@ -79,9 +79,12 @@ Currently the workflow has only been fully tested if a V1 Xeon is installed. Thi
 
 A more reliable but also somewhat more laborious route to load a modded BIOS is either do that with a flash chip clip (tedious and prone to failure), or by temporarily swapping in a cheap V1 Xeon so that you can load the modded BIOS (suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). After loading up the modded BIOS you can swap back to V2 Xeon. Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long bristle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
 
-@BillDH2k has done some testing with BIOS versions that properly support V2 Xeons (3.50+), and those unfortunately would not provide full write access to the BIOS region of the flash chip under tested conditions in Manufacturing Mode. FD/ME regions are easily unlocked via the FDO jumper for writing with the [fpt], and neither represent any challenge nor confer any advantage. Updating the FD to have full write access does not help with writing the BIOS area, since there are additional locks (protected range registers) built into the BIOS code itself. In another report @nikey22 could use AFUDOS to update BIOS area on a similar vintage Lenovo.
+@BillDH2k has done some testing with BIOS versions that properly support V2 Xeons (3.50+), and those unfortunately would not provide full write access to the BIOS region of the flash chip under tested conditions in Manufacturing Mode. FD/ME regions are easily unlocked via the FDO jumper for writing with the [fpt], and neither represent any challenge nor confer any advantage. Updating the FD to have full write access does not help with writing the BIOS area, since there are additional locks (protected range registers) built into the BIOS code itself. 
+
+In another report @nikey22 could use AFUDOS to update BIOS area on a similar vintage Lenovo.
 https://winraid.level1techs.com/t/lenovo-d30-thinkstation-c602-chipset-me7-sandy-bridge-to-me8-ivy-bridge-support/33917
-AFUDOS might be a workable route but needs to be tested, and a few different AFUDOS versions would need to be chased down.
+AFUDOS might be a workable route but needs to be tested. @nikey22 used 2.39 version of AFUDOS which can be found here (rename afudos.smc to afudos.exe):
+https://update.shared.it/SUPERMICRO/X9SCM-F/beta/
 
 
 **1. General instructions.**
