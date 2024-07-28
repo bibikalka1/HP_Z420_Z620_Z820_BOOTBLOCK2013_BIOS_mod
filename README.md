@@ -149,7 +149,7 @@ Steps:
 - D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 2
 - E. Immediately, go to J207 directory and do 2.07 BIOS update using the DOS tools, ensure it flashed successfully
 - F. Soft reboot, meaning hit "Ctrl-Alt-Del"
-- G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE". Note: There is a different way to enter this manufacturing mode by copying ME region to the BIOS chip and leaving the init flag as FF - raise an **issue** if you want to explore this more. @BillDH2k has experienced this a lot when hardware flashing ME8.
+- G. Computer should reboot somewhat violently powering itself off at first, and come back up saying "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE".
 - H. Run commands from Section 3.1 or 3.2, depending on what you are trying to do. Can do both 3.1 & 3.2 back to back.
 - I. In order to exit this "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE", 2 BIOS areas should be restored from the backup "11" above. Specifically, we restore GBE and ME
 
@@ -161,6 +161,8 @@ fpt.exe -GBE -f GBEO11.bin
 
 - J. If you did not update to custom BIOS in Section 3.2, run the official update back to version 3.96 since you probably don't want to keep 2.07.
 - K. Turn the computer off. Unplug. Put the jumpers back where they were. Clear BIOS variables with the BIOS reset button. Turn the computer on. Things should be back to normal.
+
+Note for the curious ones: There is a different way to enter this manufacturing mode by copying ME region to the BIOS chip and leaving the init flag as FF - raise an **issue** if you want to explore this more. @BillDH2k has experienced this a lot when hardware flashing ME8.
 
 **3.1 Bootblock update to 2013.**
 
