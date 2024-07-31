@@ -24,7 +24,7 @@ https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 **Tools of the trade for reference:**
 - WinMerge (all kinds of easy right click binary compare functionality)
 - HxD2500 (binary block copy/paste)
-- UEFITool (to QC modded BIOS)
+- UEFITool (to QC modded BIOS), use the latest from https://github.com/LongSoft/UEFITool
 - MMTool Aptio A4 (to QC modded BIOS)
 - Intel Flash Programming Tool (FPT) : https://winraid.level1techs.com/t/intel-converged-security-management-engine-drivers-firmware-and-tools-2-15/30719
 - HP MEBLAST Tool
@@ -46,11 +46,12 @@ In the guide below for specific file names, X means either "6" for Z420, Z620, a
 
 All BIOS versions have NVME and Resizable Bar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these CPUs. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
 
-These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions.
+These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions. For Z820 overclocking is not usually needed, so probably use 3.96 or 3.96+ versions:
+
+- J6Y_0396_NRE_mc96p.bin	NVME boot, ReBar support, 3.96+ MC, 2020 update for V1 Xeon microcodes, V2 is the same as in 3.96
 - J6Y_0396_NRE.bin			NVME boot, ReBar support, 3.96 MC
+- J6Y_0396_NRE_mc91p.bin	NVME boot, ReBar support, 3.91+ MC, update to V2 Xeon microcode, V1 is the same as in 3.91
 - J6Y_0396_NRE_mc91.bin		NVME boot, ReBar support, 3.91 MC
-- J6Y_0396_NRE_mc91p.bin	NVME boot, ReBar support, 3.91+ MC
-- J6Y_0396_NRE_mc96p.bin	NVME boot, ReBar support, 3.96+ MC
 
 For the work that was done to test all of these versions, see this link (only if you are curious):
 https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade/issues/13
