@@ -48,10 +48,10 @@ All BIOS versions have NVME and Resizable Bar support included. The only differe
 
 These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions. For Z820 overclocking is not usually needed, so probably use 3.96 or 3.96+ versions:
 
-- **J6Y_0396_NRE_mc96p.bin**	NVME boot, ReBar support, 3.96+ MC, 2020 update for V1 Xeon microcodes, V2 is the same as in 3.96
-- **J6Y_0396_NRE.bin**			NVME boot, ReBar support, 3.96 MC
-- **J6Y_0396_NRE_mc91p.bin**	NVME boot, ReBar support, 3.91+ MC, update to V2 Xeon microcode, V1 is the same as in 3.91
-- **J6Y_0396_NRE_mc91.bin**		NVME boot, ReBar support, 3.91 MC
+- **J6Y_0396_NRE_mc96p.bin**	---- NVME boot, ReBar support, 3.96+ MC, 2020 update for V1 Xeon microcodes, V2 is the same as in 3.96
+- **J6Y_0396_NRE.bin**			---- NVME boot, ReBar support, 3.96 MC
+- **J6Y_0396_NRE_mc91p.bin**	---- NVME boot, ReBar support, 3.91+ MC, update to V2 Xeon microcode, V1 is the same as in 3.91
+- **J6Y_0396_NRE_mc91.bin**		---- NVME boot, ReBar support, 3.91 MC
 
 For the work that was done to test all of these versions, see this link (only if you are curious):
 https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade/issues/13
