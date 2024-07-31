@@ -19,7 +19,7 @@ This guide is for Z420/Z620/Z820 to do various manipulations of the BIOS with so
 The guide is economical on explanations, if you want more background, please refer to the excellent hardware modding guide:
 https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 
-**Everything has been fully tested for Z420/Z620. The method is expected to also work for Z820, but will need the 1st tester. Z820 files are provided for completeness, following the same approach as for Z620**
+**Everything has been fully tested for Z420/Z620. Full bios chip write access was also tested for Z820 so you can upgrade the bootblock without risk. The Z820 bios mods testing is in progress.**
 
 **Tools of the trade for reference:**
 - WinMerge (all kinds of easy right click binary compare functionality)
@@ -39,7 +39,7 @@ Doing most of the operations here other than the modded BIOS flash should be rea
 
 Download both IMET8.zip, and the specific files for your type of workstation.
 
-Z620 is fully tested. Z820 has not been tested yet, but the BIOS files are so similar that the mods ported to Z820 BIOS files should work in the identical manner. MEBLAST utility binary that HP provided was the same for Z620/Z820. ME region is also identical in Z620 and Z820 BIOS files. "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" full write access is likely a function of 2.07 BIOS that disabled protected range registers for the BIOS region in this mode (BIOS: 0x510000 to 0xFFFFFF).
+Z620 is fully tested. Z820 bios mods have not been tested yet, but the BIOS files are so similar that the mods ported to Z820 BIOS files should work in the identical manner. MEBLAST utility binary that HP provided was the same for Z620/Z820. ME region is also identical in Z620 and Z820 BIOS files. "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" full write access does work on Z820 as well - tested. It is likely a function of 2.07 BIOS that disabled protected range registers for the BIOS region in this mode (BIOS: 0x510000 to 0xFFFFFF).
 
 
 In the guide below for specific file names, X means either "6" for Z420, Z620, and "8" for Z820. Y means either "1" for Z420, Z620 (as in J61), and "3" for Z820 (as in J63). Z420 and Z620 are identical in the BIOS domain. Ensure you are using the correct versions for your workstation!!!
@@ -89,6 +89,8 @@ https://update.shared.it/SUPERMICRO/X9SCM-F/beta/
 
 
 **1. General instructions.**
+
+Space inside ZX20 workstations is tight - accessing/moving jumpers can be tricky. I recommend long locking tweezers that I have been using with great success. Don't rush it, make sure the jumpers land on the correct pins.
 
 You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8.zip file to the USB drive into IMET8 folder. This IMET8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS area and the boot block area into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
 
@@ -144,7 +146,7 @@ Unpack J207 and J396 BIOS DOS update directories to the root of the USB drive, m
 
 Steps:
 
-- A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). Move the ME FDO jumper from its current 2 pins to the other enabled write position.
+- A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). E14 BB is important! Move the ME FDO jumper from its current 2 pins to the other enabled write position.
 - B. Boot to DOS using the USB stick.
 - C. Back up your current BIOS chip as instructed above, you must do this by running [cd IMET8; backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS area separately.
 - D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 2
