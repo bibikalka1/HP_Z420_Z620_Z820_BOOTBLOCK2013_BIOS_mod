@@ -90,7 +90,8 @@ https://update.shared.it/SUPERMICRO/X9SCM-F/beta/
 
 **1. General instructions.**
 
-Space inside ZX20 workstations is tight - accessing/moving jumpers can be tricky. I recommend long locking tweezers that I have been using with great success. Don't rush it, make sure the jumpers land on the correct pins.
+Space inside ZX20 workstations is tight - accessing/moving jumpers can be tricky. I recommend long locking tweezers that I have been using with great success. Don't rush it, make sure the jumpers land on the correct pins. See an example of a tweezer set including the locking one with the pin:
+https://github.com/bibikalka1/HP_Z420_Z620_Z820_BOOTBLOCK2013_BIOS_mod/blob/main/tweezers.jpg
 
 You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8.zip file to the USB drive into IMET8 folder. This IMET8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS area and the boot block area into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
 
