@@ -44,7 +44,9 @@ Z620 is fully tested. Z820 bios mods have not been tested yet, but the BIOS file
 
 In the guide below for specific file names, X means either "6" for Z420, Z620, and "8" for Z820. Y means either "1" for Z420, Z620 (as in J61), and "3" for Z820 (as in J63). Z420 and Z620 are identical in the BIOS domain. Ensure you are using the correct versions for your workstation!!!
 
-All BIOS versions have NVME and Resizable Bar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these CPUs. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
+All BIOS versions have NVME and Resizable Bar support included. The only difference is the microcode vintage. 3.91 and 3.91+ predate the 2018 Intel Meltdown fixes, 3.96 and 3.96+ include the later fixes for these CPUs. It has been reported that 3.91+ microcodes might  be faster, and might overclock better. Versions refer to the HP BIOS versions where they were taken from, with some upgrades if indicated by +. In 3.96 MC version these are identical as in the official 03.96 HP BIOS version. If using older microcodes, you will have to rename C:\Windows\System32\mcupdate_GenuineIntel.dll to something else in order to disable Windows microcode update of the BIOS version. To acomplish this, you could either run either a DOS window or PowerShell on Windows as TrustedInstaller to be able to rename this file without issues. See this utility from NirSoft that helps to run any program as TrustedInstaller very easily: https://blog.nirsoft.net/2020/02/25/run-program-as-trustedinstaller/
+
+Feel free to examine the differences of the modded BIOSes vs official versions 3.91 and 3.96 using tools such as WinMerge and UEFITool. During BIOS modding and testing microcode updates turned out to be quite idiosyncratic in cases where microcode sizes were smaller than those in version 3.96, and required careful manual replacements. But all 4 versions of Z620 modded BIOS below were tested, and do work.
 
 These are modded BIOS versions, fully tested for Z620 already (J61), still need Z820 testing of the respective J63 versions. Overclocking is usually not an option when 2 cpus are used in Z820, so probably just use 3.96 or 3.96+ versions:
 
@@ -90,7 +92,7 @@ https://update.shared.it/SUPERMICRO/X9SCM-F/beta/
 
 **1. General instructions.**
 
-Space inside ZX20 workstations is tight - accessing/moving jumpers can be tricky. I recommend long locking tweezers that I have been using with great success. Don't rush it, make sure the jumpers land on the correct pins. See an example of a tweezer set including the locking one with the pin:
+Space inside ZX20 workstations is tight - accessing/moving jumpers can be tricky. I recommend long locking tweezers that I have been using with great success. Don't rush it, make sure the jumpers land on the correct pins. If in doubt - take a picture, zoom in, see if you got it. See an example of a tweezer set including the locking one with the pin or the inverse one where you push to open:
 https://github.com/bibikalka1/HP_Z420_Z620_Z820_BOOTBLOCK2013_BIOS_mod/blob/main/tweezers.jpg
 
 You will need to create a USB DOS boot stick. Unpack the respective MEBLAST (MEBX20) package to the USB drive, unpack IMET8.zip file to the USB drive into IMET8 folder. This IMET8.zip file includes a suitable fpt version, and a few other useful utilities. Copy the desired modded BIOS area and the boot block area into the IMET8 folder. The procedures will be done under DOS using the command line, familiarize yourself with DOS commands, such as cd, ren, dir, etc. It is a bit like Linux but more limited.
@@ -138,6 +140,8 @@ MEBLAST J6Y_0396.bin
 - E. Shut down, return the FDO jumper to its original position, turn the computer on.
 - F. Done, you now have ME8, fully initialized. You should be able to clone this ME area from the BIOS chip whenever is needed.
 
+**Note:** If you used the earlier hardware modding guide by @SuperThunder and flashed a pristine ME8 from the BIOS file - you may be stuck in the permanent MANUFACTURING MODE. MEBLAST utility will give an error in this situation. To fix that, download the file ME8_396i.zip (same file for all ZX20), unpack to IMET8 directory, and run this command with the FDO jumper on [fpt.exe -ME -f ME8_396i.BIN]. Turn off the computer, move the FDO jumper to the default OFF position, reboot. ME8 will initialize, and the message will disappear.
+
 **3. Obtaining full write access to the BIOS flash chip enabling both bootblock update in software, and custom BIOS loading.**
 
 Here, we use the MEBLAST glitch with 2.07 BIOS to trigger "MANAGEMENT PLATFORM (ME) IN MANUFACTURING MODE" operation, where we will have full write access to the flash chip. Updating ME to ME8 first is strongly recommended before doing Section 3, mostly so you do not have to worry about this later. You will also gain confidence with the MEBLAST approach.
@@ -147,7 +151,7 @@ Unpack J207 and J396 BIOS DOS update directories to the root of the USB drive, m
 
 Steps:
 
-- A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). E14 BB is important! Move the ME FDO jumper from its current 2 pins to the other enabled write position.
+- A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). E14 BB is important, fpt write access will not be obtained without this jumper! Move the ME FDO jumper from its current 2 pins to the other enabled write position.
 - B. Boot to DOS using the USB stick.
 - C. Back up your current BIOS chip as instructed above, you must do this by running [cd IMET8; backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS area separately.
 - D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 2
