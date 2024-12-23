@@ -19,7 +19,7 @@ This guide is for Z420/Z620/Z820 to do various manipulations of the BIOS with so
 The guide is economical on explanations, if you want more background, please refer to the excellent hardware modding guide:
 https://github.com/SuperThunder/HP_Z420_Z620_Z820_BootBlock_Upgrade
 
-**Everything has been fully tested for Z420/Z620. Full bios chip write access was also tested for Z820 so you can upgrade the bootblock without risk. The Z820 bios mods testing is in progress.**
+**Everything has been fully tested for Z420/Z620. Full bios chip write access was also tested for Z820 so you can upgrade the bootblock without risk. The Z820 bios mods testing is in progress. If you have Z820 v1 motherboard - the guide will not work since the important E14 BB jumper is missing on v1**
 
 **Tools of the trade for reference:**
 - WinMerge (all kinds of easy right click binary compare functionality)
@@ -78,16 +78,15 @@ https://github.com/xCuri0/ReBarUEFI/issues/11#issuecomment-2187864198
 
 **0. Present limitations.**
 
-Currently the workflow has only been fully tested if a V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet and lacks the V2 microcode. Actually, after doing some research I expect that a V2 Xeon with 2013 BootBlock and v2.07 should boot but will report this "1801-Microcode Update Error. Missing or invalid Processor Microcode." Googling for this message seems to indicate that HP workstations do boot with this error - so you might be able to run v2.07 BIOS even on a v2 Xeon, allowing full flash chip write access. If you have v2 Xeon installed and a spare v1 Xeon, and would like to load a modded BIOS, do try this route first, and report back in **Issues**. If v2 Xeon does not boot at all with v2.07, you would fix that by swapping to v1 Xeon instead.
-
-A more reliable but also somewhat more laborious route to load a modded BIOS is either do that with a flash chip clip (tedious and prone to failure), or by temporarily swapping in a cheap V1 Xeon so that you can load the modded BIOS (suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). After loading up the modded BIOS you can swap back to V2 Xeon. Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long bristle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
+After some testing it emerged that the workflow for custom BIOS update only works if V1 Xeon is installed. This is because we need to load BIOS v2.07, which did not support V2 Xeons yet. Trying to flash v2.07 on V2 Xeon outputs the following error: "Error! System ROM image is invalid." Your best path here is to grab a cheap V1 Xeon, for possible as low as $1-3, and temporarily swap it in to flash the custom BIOS mod, then you swap back to V2 (originally suggested by @BillDH2k - well defined steps, and fringe benefits such as updating the thermal paste, and de-dusting). Take this opportunity to also detach the fan from the heatsink, and remove all the dust with a vacuum plus a long bristle brush. You will need new suitable thermal paste as well, such as Arctic MX-4.
 
 @BillDH2k has done some testing with BIOS versions that properly support V2 Xeons (3.50+), and those unfortunately would not provide full write access to the BIOS region of the flash chip under tested conditions in Manufacturing Mode. FD/ME regions are easily unlocked via the FDO jumper for writing with the [fpt], and neither represent any challenge nor confer any advantage. Updating the FD to have full write access does not help with writing the BIOS area, since there are additional locks (protected range registers) built into the BIOS code itself. 
 
 In another report @nikey22 could use AFUDOS to update BIOS area on a similar vintage Lenovo.
 https://winraid.level1techs.com/t/lenovo-d30-thinkstation-c602-chipset-me7-sandy-bridge-to-me8-ivy-bridge-support/33917
-AFUDOS might be a workable route but needs to be tested. @nikey22 used 2.39 version of AFUDOS which can be found here (rename afudos.smc to afudos.exe):
+@nikey22 used 2.39 version of AFUDOS which can be found here (rename afudos.smc to afudos.exe):
 https://update.shared.it/SUPERMICRO/X9SCM-F/beta/
+A user tested AFUDOS for Z620, and found that it cannot even access the flash chip, so this does not appear to be a viable router for ZX20 series.
 
 
 **1. General instructions.**
