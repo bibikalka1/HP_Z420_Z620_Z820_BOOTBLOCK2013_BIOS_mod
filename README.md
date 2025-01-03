@@ -1,5 +1,5 @@
 # HP_Z420_Z620_Z820_BOOTBLOCK_2013_BIOS_mod
-A guide and collection of resources on how to flash 2013 BootBlock and modded BIOS to HP Z420, Z620, and Z820. The flashing procedure is done with software only, and no BIOS chip clips or desoldering. The modded BIOS supports NVME boot, ReSizable Bar, a range of CPU microcodes.
+A guide and collection of resources on how to flash 2013 BootBlock and modded BIOS to HP Z420, Z620, and Z820. The flashing procedure is done with software only, and no BIOS chip clips or desoldering. The modded BIOS files support NVME boot, ReSizable Bar, and include different versions of CPU microcodes in case you want the older microcodes to attempt overclocking.
 
 
 **Disclaimer: I am not responsible if you do brick your computer - you are doing this at your own risk. Check twice, hit Enter once.**
