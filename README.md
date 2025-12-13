@@ -150,7 +150,7 @@ Unpack J207 and J396 BIOS DOS update directories to the root of the USB drive, m
 
 Steps:
 
-- A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB). E14 BB is important, fpt write access will not be obtained without this jumper! Move the ME FDO jumper from its current 2 pins to the other enabled write position.
+- A. Move green password / downgrade protection jumper to Bootblock pins (E14 BB), thus modifying both jumpers at the same time. The removal of the downgrade protection jumper is necessary, in order to be able to downgrade official BIOS versions. E14 BB is also important, fpt write access will not be obtained without this jumper! Move the ME FDO jumper from its current 2 pins to the other enabled write position.
 - B. Boot to DOS using the USB stick.
 - C. Back up your current BIOS chip as instructed above, you must do this by running [cd IMET8; backup 11] command. A single BIOS file backup alternative is [FPT.EXE -d BACKUP.BIN], but you do want to use the DOS backup script provided in IMET8 since it will help to save every BIOS area separately.
 - D. Run MEBLAST to create the un-initialized ME region (MEBLAST J6Y_0396.bin) - same as in Section 2
